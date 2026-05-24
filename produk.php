@@ -51,7 +51,7 @@
 	<!-- category -->
 	<div class="flex items-center justify-between h-[20%] pt-40 pb-15">
 	<div class="flex justify-start">
-		<h3 class="text-6xl font-semibold">List item</h3>
+		<h3 class="text-5xl font-semibold">List item</h3>
 	</div>
 	<div class="flex justify-end">
 		<div class="flex items-center gap-3 border border-black rounded-2xl p-1 bg-white">
