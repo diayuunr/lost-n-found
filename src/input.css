@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@source "./**/*.php";
+@source "./**/*.html";
+@source "./**/*.js";
+
+input:focus {
+    outline: none !important;
+}

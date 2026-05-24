@@ -20,35 +20,8 @@
 			<h1 class="text-2xl font-bold">
 				<a href="index.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
 			</h1>
-			<div class="flex items-center gap-5">
-			<div class="flex items-center rounded-3xl border border-gray-300 p-2">
-			<form action="produk.php" class="flex items-center gap-3">
-				<input 
-				type="text" 
-				name="search" 
-				placeholder="Cari barang..."
-				value="<?php echo $_GET['search'] ?? '' ?>" 
-				class="px-2 py-1 outline-none focus:ring-2 focus:ring-[#53B789] w-64"
-				>
-
-				<input 
-				type="hidden" 
-				name="kat" 
-				value="<?php echo $_GET['kat'] ?? '' ?>"
-				>
-
-				<input 
-				type="submit" 
-				name="cari" 
-				value="Cari"
-				class="bg-[#53B789] text-white px-2 py-1 rounded-xl hover:bg-[#469c74] transition cursor-pointer"
-				>
-
-			</form>
-			</div>
 			<div class="flex items-center gap-3 bg-black hover:bg-gray-800 text-white text-md px-5 py-2 rounded-3xl">
 				<a href="login.php">Login</a>
-			</div>
 			</div>
 		</div>
 		</nav>

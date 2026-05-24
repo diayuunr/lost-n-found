@@ -10,95 +10,184 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Bukawarung</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="public/output.css">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gradient-to-b from-[#53B789]/20 to-[#FFFFFF]/20 h-screen px-30 overflow-hidden">
 	<!-- header -->
 	<header>
-		<div class="container">
-			<h1><a href="index.php">Bukawarung</a></h1>
-			<ul>
-				<li><a href="produk.php">Produk</a></li>
-			</ul>
-		</div>
-	</header>
+		<nav class="fixed top-7 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl rounded-4xl bg-white/80 backdrop-blur-md shadow-lg px-5 pl-7 py-2">
+  		<div class="flex items-center justify-between">
+			<h1 class="text-2xl font-bold">
+				<a href="index.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
+			</h1>
+			<div class="flex items-center rounded-3xl border border-gray-300 p-2 px-3">
+			<form action="produk.php" class="flex items-center gap-3">
+				<input 
+				type="text" 
+				name="search" 
+				placeholder="Cari barang..."
+				value="<?php echo $_GET['search'] ?? '' ?>" 
+				class="px-2 py-1 outline-none focus:outline-none focus:ring-0 focus:ring-offset-0 w-64"
+				>
 
-	<!-- search -->
-	<div class="search">
-		<div class="container">
-			<form action="produk.php">
-				<input type="text" name="search" placeholder="Cari Produk" value="<?php echo $_GET['search'] ?>">
-				<input type="hidden" name="kat" value="<?php echo $_GET['kat'] ?>">
-				<input type="submit" name="cari" value="Cari Produk">
+				<input 
+				type="hidden" 
+				name="kat" 
+				value="<?php echo $_GET['kat'] ?? '' ?>"
+				>
+
+				<button 
+				type="submit" 
+				name="cari" 
+				class="bg-[#53B789] text-white px-3 py-1.5 rounded-xl hover:bg-[#469c74] transition cursor-pointer"
+				><i data-lucide="search" class="w-5 h-5"></i></button>
 			</form>
-		</div>
-	</div>
-
-		<!-- category -->
-	<div class="section">
-		<div class="container">
-			<h3>Kategori</h3>
-			<div class="box">
-				<?php 
-					$kategori = mysqli_query($conn, "SELECT * FROM tb_category ORDER BY category_id DESC");
-					if(mysqli_num_rows($kategori) > 0){
-						while($k = mysqli_fetch_array($kategori)){
-				?>
-					<a href="produk.php?kat=<?php echo $k['category_id'] ?>">
-						<div class="col-5">
-							<img src="img/icon-kategori.png" width="50px" style="margin-bottom:5px;">
-							<p><?php echo $k['category_name'] ?></p>
-						</div>
-					</a>
-				<?php }}else{ ?>
-					<p>Kategori tidak ada</p>
-				<?php } ?>
 			</div>
 		</div>
+		</nav>
+	</header>
+
+	<!-- category -->
+	<div class="flex items-center justify-between h-[20%] pt-40 pb-15">
+	<div class="flex justify-start">
+		<h3 class="text-6xl font-semibold">List item</h3>
+	</div>
+	<div class="flex justify-end">
+		<div class="flex items-center gap-3 border border-black rounded-2xl p-1 bg-white">
+			<!-- Semua -->
+			<a href="produk.php">
+				<div class="<?php echo (!isset($_GET['kat']) || $_GET['kat'] == '') 
+					? 'bg-black text-white' 
+					: 'text-black hover:bg-gray-100'; ?> 
+					px-4 py-1.5 rounded-xl transition">
+					
+					<p>Semua</p>
+				</div>
+			</a>
+
+			<?php 
+				$kategori = mysqli_query($conn, "SELECT * FROM tb_category ORDER BY category_id ASC");
+				if(mysqli_num_rows($kategori) > 0){
+					while($k = mysqli_fetch_array($kategori)){
+			?>
+
+			<a href="produk.php?kat=<?php echo $k['category_id'] ?>">
+				<div class="<?php echo (isset($_GET['kat']) && $_GET['kat'] == $k['category_id']) 
+					? 'bg-black text-white' 
+					: 'text-black hover:bg-gray-100'; ?> 
+					px-4 py-1.5 rounded-xl transition">
+
+					<p><?php echo $k['category_name'] ?></p>
+				</div>
+			</a>
+
+			<?php }}else{ ?>
+				<p>Kategori tidak ada</p>
+			<?php } ?>
+
+		</div>
+	</div>
 	</div>
 
 	<!-- new product -->
-	<div class="section">
-		<div class="container">
-			<h3>Produk</h3>
-			<div class="box">
-				<?php 
-					if($_GET['search'] != '' || $_GET['kat'] != ''){
-						$where = "AND product_name LIKE '%".$_GET['search']."%' AND category_id LIKE '%".$_GET['kat']."%' ";
-					}
+	<div>
+		<div class="flex flex-wrap gap-5 justify-center">
+		<?php 
+			$where = "";
+			if(isset($_GET['search']) && $_GET['search'] != '' || isset($_GET['kat']) && $_GET['kat'] != ''){
+				$where = "AND p.product_name LIKE '%".$_GET['search']."%' AND p.category_id LIKE '%".$_GET['kat']."%' ";
+			}
 
-					$produk = mysqli_query($conn, "SELECT * FROM tb_product WHERE product_status = 1 $where ORDER BY product_id DESC");
-					if(mysqli_num_rows($produk) > 0){
-						while($p = mysqli_fetch_array($produk)){
-				?>	
-					<a href="detail-produk.php?id=<?php echo $p['product_id'] ?>">
-						<div class="col-4">
-							<img src="produk/<?php echo $p['product_image'] ?>">
-							<p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-							<p class="harga">Rp. <?php echo number_format($p['product_price']) ?></p>
+			// Pagination setup
+			$per_page = 5;
+			$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+			$offset = ($page - 1) * $per_page;
+
+			// Hitung total produk
+			$total_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM tb_product p WHERE p.product_status = 1 $where");
+			$total_row = mysqli_fetch_assoc($total_query);
+			$total_produk = $total_row['total'];
+			$total_page = ceil($total_produk / $per_page);
+
+			// Query produk dengan LIMIT + JOIN kategori
+			$produk = mysqli_query($conn, "SELECT p.*, c.category_name 
+				FROM tb_product p 
+				LEFT JOIN tb_category c ON p.category_id = c.category_id 
+				WHERE p.product_status = 1 $where 
+				ORDER BY p.product_id DESC 
+				LIMIT $per_page OFFSET $offset");
+
+			if(mysqli_num_rows($produk) > 0){
+				while($p = mysqli_fetch_array($produk)){
+		?>
+				<a href="detail-produk.php?id=<?php echo $p['product_id'] ?>">
+					<div class="relative w-60 h-auto flex-col border border-gray-300 rounded-xl bg-white hover:shadow-lg transition">
+						<!-- Badge Kategori -->
+						<div class="absolute top-3 left-3 <?php echo (strtolower($p['category_name']) == 'diambil') ? 'bg-red-800/80' : 'bg-green-800/80' ?> text-white text-xs px-2 py-1 rounded-lg font-semibold">
+							<?php echo $p['category_name'] ?>
 						</div>
-					</a>
-				<?php }}else{ ?>
-					<p>Produk tidak ada</p>
-				<?php } ?>
-			</div>
+						<img src="produk/<?php echo $p['product_image'] ?>" class="w-full h-60 object-cover rounded-t-xl">
+						<div class="p-3 gap-2 flex flex-col mt-auto">
+						<div class="gap-1 flex flex-col">
+							<p class="font-semibold"><?php echo substr($p['product_name'], 0, 30) ?></p>
+							<p class="font-normal text-xs text-gray-500"><?php echo substr($p['product_description'], 0, 50) ?></p>
+						</div>
+						<div class="gap-2 flex flex-col mt-auto">
+							<p class="font-normal text-xs text-gray-500 flex items-center gap-2">
+							<i data-lucide="map-pin" class="w-4 h-4"></i> <?php echo substr($p['product_location'], 0, 50) ?>
+							</p>
+							<p class="font-normal text-xs text-gray-500 flex items-center gap-2">
+							<i data-lucide="calendar-check" class="w-4 h-4"></i> <?php echo substr($p['product_date'], 0, 50) ?>
+							</p>
+						</div>
+						</div>
+					</div>
+				</a>
+			<?php }}else{ ?>
+				<p>Produk tidak ada</p>
+			<?php } ?>
 		</div>
+
+		<!-- Pagination -->
+		<?php if($total_page > 1){ ?>
+		<div class="flex justify-center gap-2 mt-8">
+
+			<!-- Tombol Prev -->
+			<?php if($page > 1){ ?>
+			<a href="?page=<?php echo $page-1 ?>&search=<?php echo $_GET['search'] ?? '' ?>&kat=<?php echo $_GET['kat'] ?? '' ?>">
+				<div class="px-4 py-2 rounded-xl border border-gray-300 bg-white hover:bg-gray-100 transition">
+					&laquo;
+				</div>
+			</a>
+			<?php } ?>
+
+			<!-- Nomor Halaman -->
+			<?php for($i = 1; $i <= $total_page; $i++){ ?>
+			<a href="?page=<?php echo $i ?>&search=<?php echo $_GET['search'] ?? '' ?>&kat=<?php echo $_GET['kat'] ?? '' ?>">
+				<div class="px-4 py-2 rounded-xl border transition
+					<?php echo ($i == $page) ? 'bg-black text-white border-black' : 'bg-white border-gray-300 hover:bg-gray-100' ?>">
+					<?php echo $i ?>
+				</div>
+			</a>
+			<?php } ?>
+
+			<!-- Tombol Next -->
+			<?php if($page < $total_page){ ?>
+			<a href="?page=<?php echo $page+1 ?>&search=<?php echo $_GET['search'] ?? '' ?>&kat=<?php echo $_GET['kat'] ?? '' ?>">
+				<div class="px-4 py-2 rounded-xl border border-gray-300 bg-white hover:bg-gray-100 transition">
+					&raquo;
+				</div>
+			</a>
+			<?php } ?>
+
+		</div>
+		<?php } ?>
 	</div>
 
-	<!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<h4>Alamat</h4>
-			<p><?php echo $a->admin_address ?></p>
-
-			<h4>Email</h4>
-			<p><?php echo $a->admin_email ?></p>
-
-			<h4>No. Hp</h4>
-			<p><?php echo $a->admin_telp ?></p>
-			<small>Copyright &copy; 2020 - Bukawarung.</small>
-		</div>
-	</div>
+	<script src="https://unpkg.com/lucide@latest"></script>
+	<script>
+	lucide.createIcons();
+	</script>
 </body>
 </html>
