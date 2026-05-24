@@ -15,11 +15,14 @@
 		<form action="" method="POST" class="flex-col flex items-center justify-center gap-4">
 			<div class="flex flex-col gap-1 w-full">
 			<h2 class="font-semibold text-md justify-start">Username</h2>
-			<input type="text" name="user" placeholder="Enter your username" class="flex input-control border border-[#53B789] px-4 py-1 rounded-lg">
+			<input type="text" name="user" placeholder="Enter your username" class="flex input-control border border-[#53B789] px-4 py-1.5 rounded-lg outline-none">
 			</div>
 			<div class="flex flex-col gap-1 w-full mb-3">
 			<h2 class="font-semibold text-md justify-start">Password</h2>
-			<input type="password" name="pass" placeholder="Enter your password" class="flex input-control border border-[#53B789] px-4 py-1 rounded-lg">
+			<div class="relative flex input-control border border-[#53B789] px-4 py-1.5 rounded-lg">
+			<input type="password" id="password" name="pass" placeholder="Enter your password" class="flex input-control w-full outline-none">
+			<button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"><i data-lucide="eye" class="w-5 h-5"></i></button>
+			</div>
 			</div>
 			<input type="submit" name="submit" value="Login" class="w-full flex bg-[#53B789] text-white px-4 py-1.5 rounded-lg hover:bg-[#469c74] transition cursor-pointer">
 		</form>
@@ -46,5 +49,28 @@
 			}
 		?>
 	</div>
+
+	<script src="https://unpkg.com/lucide@latest"></script>
+
+	<script>
+	lucide.createIcons();
+
+	const passwordInput = document.getElementById('password');
+	const toggleButton = document.getElementById('togglePassword');
+
+	let isVisible = false;
+
+	toggleButton.addEventListener('click', () => {
+		isVisible = !isVisible;
+
+		passwordInput.type = isVisible ? 'text' : 'password';
+
+		toggleButton.innerHTML = isVisible
+		? '<i data-lucide="eye-off" class="w-5 h-5"></i>'
+		: '<i data-lucide="eye" class="w-5 h-5"></i>';
+
+		lucide.createIcons();
+	});
+	</script>
 </body>
 </html>

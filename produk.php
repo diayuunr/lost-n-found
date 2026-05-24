@@ -35,6 +35,29 @@
 		</div>
 	</div>
 
+		<!-- category -->
+	<div class="section">
+		<div class="container">
+			<h3>Kategori</h3>
+			<div class="box">
+				<?php 
+					$kategori = mysqli_query($conn, "SELECT * FROM tb_category ORDER BY category_id DESC");
+					if(mysqli_num_rows($kategori) > 0){
+						while($k = mysqli_fetch_array($kategori)){
+				?>
+					<a href="produk.php?kat=<?php echo $k['category_id'] ?>">
+						<div class="col-5">
+							<img src="img/icon-kategori.png" width="50px" style="margin-bottom:5px;">
+							<p><?php echo $k['category_name'] ?></p>
+						</div>
+					</a>
+				<?php }}else{ ?>
+					<p>Kategori tidak ada</p>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+
 	<!-- new product -->
 	<div class="section">
 		<div class="container">

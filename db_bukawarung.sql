@@ -43,7 +43,7 @@ CREATE TABLE `tb_admin` (
 --
 
 INSERT INTO `tb_admin` (`admin_id`, `admin_name`, `username`, `password`, `admin_telp`, `admin_email`, `admin_address`) VALUES
-(1, 'Dzulfikar Nurfikri', 'admin', 'fcea920f7412b5da7be0cf42b8c93759', '+6282217604816', 'dzulfikarnurfikri01@gmail.com', 'Jl. Petojo VIJ VI, Cideng, Gambir, Jakarta Pusat 10150.');
+(1, 'Admin01', 'admin', 'admin123', '+6281568488262', 'diayunuraini9@gmail.com', 'FMIPA Universitas Gadjah Mada');
 
 -- --------------------------------------------------------
 
