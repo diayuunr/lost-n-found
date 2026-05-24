@@ -7,7 +7,10 @@
 	<link rel="stylesheet" href="public/output.css">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
-<body id="bg-login" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#53B789]/20 to-[#FFFFFF]/20">
+<body id="bg-login" class="relative h-screen flex items-center justify-center bg-gradient-to-b from-[#53B789]/20 to-[#FFFFFF]/20">
+	<button onclick="window.history.back()" class="text-lg absolute font-semibold cursor-pointer top-40 left-0 px-70 flex items-center gap-2 text-black hover:text-gray-700 transition">
+		<i data-lucide="circle-arrow-left" class="w-5 h-5"></i> Kembali
+	</button>
 	<div class="border border-[#53B789] rounded-2xl p-8 bg-white/80 backdrop-blur-md shadow-lg w-full max-w-md">
 		<h2 class="font-semibold text-3xl">Login</h2>
 		<p class="text-gray-500 mb-6">Access is restricted to authorized staff only</p>
