@@ -23,7 +23,7 @@
 			</h1>
 			<div class="flex items-center gap-3">
 			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
-				<a href="data-produk.php">Tambah Barang</a>
+				<a href="tambah-produk.php">Tambah Barang</a>
 			</div>
 			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
 				<a href="data-produk.php">Kelola Barang</a>
