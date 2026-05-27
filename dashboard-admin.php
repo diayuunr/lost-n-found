@@ -19,14 +19,14 @@
 		<nav class="fixed top-7 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl rounded-4xl bg-white/80 backdrop-blur-md shadow-lg px-5 pl-7 py-2">
   		<div class="flex items-center justify-between">
 			<h1 class="text-2xl font-bold">
-				<a href="index.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
+				<a href="dashboard-admin.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
 			</h1>
 			<div class="flex items-center gap-3">
 			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
 				<a href="tambah-produk.php">Tambah Barang</a>
 			</div>
 			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
-				<a href="data-produk.php">Kelola Barang</a>
+				<a href="kelola-barang.php">Kelola Barang</a>
 			</div>
 			<div class="flex items-center gap-3 text-white bg-black hover:bg-gray-800 text-md px-5 py-2 rounded-3xl cursor-pointer">
 				<a href="keluar.php">Logout</a>
@@ -41,7 +41,7 @@
 		<div class="container">
 			<h3 class="text-7xl font-semibold mb-5 max-w-lg">Reconnect with What You Lost.</h3>
 			<p class="text-gray-700 text-xl mb-10">Selamat Datang <span class="font-bold"><?php echo $_SESSION['a_global']->admin_name ?></span> di Lost & Found Management System</p>
-			<a href="data-produk.php" class="inline-flex items-center gap-2 shadow-lg shadow-black border border-black bg-[#53B789] text-white px-5 py-2 rounded-lg hover:bg-[#469c74] transition">
+			<a href="kelola-barang.php" class="inline-flex items-center gap-2 shadow-lg shadow-black border border-black bg-[#53B789] text-white px-5 py-2 rounded-lg hover:bg-[#469c74] transition">
 				Kelola Barang<i data-lucide="circle-arrow-right"></i></a>
 		</div>
 		<div class="hidden md:block">

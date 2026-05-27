@@ -50,10 +50,10 @@
 				$p = mysqli_fetch_object($produk);
 		?>
 			<div class="flex items-start gap-10 border border-gray-300 rounded-3xl bg-white w-full max-w-4xl">
-				<div class="col-2">
-					<img src="produk/<?php echo $p->product_image ?>" width="100%">
+				<div class="w-1/2 h-full">
+					<img src="produk/<?php echo $p->product_image ?>" class="w-full h-full object-cover rounded-3xl">
 				</div>
-				<div class="py-10 pr-10">
+				<div class="py-6 pr-10">
 					<div class="w-20 items-center text-center <?php echo (strtolower($p->category_name) == 'diambil') ? 'bg-red-800/80' : 'bg-green-800/80' ?> text-white text-sm px-2 py-2 mb-5 rounded-lg font-semibold">
 						<?php echo $p->category_name ?>
 					</div>

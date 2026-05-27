@@ -10,28 +10,54 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bukawarung</title>
+	<title>Lost & Found</title>
 	<link rel="stylesheet" href="public/output.css">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-b from-[#53B789]/20 to-[#FFFFFF]/20 h-screen overflow-hidden px-30 ">
+	<?php $current_page = basename($_SERVER['PHP_SELF']); ?>
 	<!-- header -->
 	<header>
 		<nav class="fixed top-7 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl rounded-4xl bg-white/80 backdrop-blur-md shadow-lg px-5 pl-7 py-2">
-  		<div class="flex items-center justify-between">
+		<div class="flex items-center justify-between">
+
 			<h1 class="text-2xl font-bold">
-				<a href="index.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
+				<a href="dashboard-admin.php">
+					LOST <span class="text-[#53B789]">&</span> FOUND
+				</a>
 			</h1>
+
 			<div class="flex items-center gap-3">
-			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
-				<a href="tambah-produk.php">Tambah Barang</a>
-			</div>
-			<div class="flex items-center gap-3 text-black text-md px-5 py-2 rounded-3xl cursor-pointer">
-				<a href="data-produk.php">Kelola Barang</a>
-			</div>
-			<div class="flex items-center gap-3 text-white bg-black hover:bg-gray-800 text-md px-5 py-2 rounded-3xl cursor-pointer">
-				<a href="keluar.php">Logout</a>
-			</div>
+
+				<!-- Tambah Barang -->
+				<a href="tambah-produk.php">
+					<div class="flex items-center gap-3 text-md px-5 py-2 rounded-3xl cursor-pointer transition
+						<?php echo ($current_page == 'tambah-produk.php') 
+						? 'text-[#53B789] font-semibold' 
+						: 'text-black'; ?>">
+						
+						Tambah Barang
+					</div>
+				</a>
+
+				<!-- Kelola Barang -->
+				<a href="kelola-barang.php">
+					<div class="flex items-center gap-3 text-md px-5 py-2 rounded-3xl cursor-pointer transition
+						<?php echo ($current_page == 'kelola-barang.php') 
+						? 'text-[#53B789] font-semibold' 
+						: 'text-black'; ?>">
+						
+						Kelola Barang
+					</div>
+				</a>
+
+				<!-- Logout -->
+				<a href="keluar.php">
+					<div class="flex items-center gap-3 text-white bg-black hover:bg-gray-800 text-md px-5 py-2 rounded-3xl cursor-pointer transition">
+						Logout
+					</div>
+				</a>
+
 			</div>
 		</div>
 		</nav>
@@ -39,14 +65,14 @@
 
 	<!-- category -->
 	<div class="flex items-center justify-between h-[20%] pt-40 pb-15">
-	<div class="flex flex-col gap-1 justify-start">
+	<div class="flex flex-col gap-1 justify-start ml-3">
 		<h3 class="text-4xl font-semibold">Kelola Barang</h3>
 		<p class="text-gray-500 font-medium text-md">Pantau dan kelola seluruh barang temuan.</p>
 	</div>
 	<div class="flex justify-end gap-3">
 		<div class="flex items-center gap-3 border border-black rounded-2xl p-1 bg-white">
 			<!-- Semua -->
-			<a href="produk.php">
+			<a href="kelola-barang.php">
 				<div class="<?php echo (!isset($_GET['kat']) || $_GET['kat'] == '') 
 					? 'bg-black text-white' 
 					: 'text-black hover:bg-gray-100'; ?> 
@@ -62,7 +88,7 @@
 					while($k = mysqli_fetch_array($kategori)){
 			?>
 
-			<a href="produk.php?kat=<?php echo $k['category_id'] ?>">
+			<a href="kelola-barang.php?kat=<?php echo $k['category_id'] ?>">
 				<div class="<?php echo (isset($_GET['kat']) && $_GET['kat'] == $k['category_id']) 
 					? 'bg-black text-white' 
 					: 'text-black hover:bg-gray-100'; ?> 
@@ -78,7 +104,7 @@
 
 		</div>
 		<div class="flex items-center rounded-3xl border border-gray-300 p-2 px-3 bg-white">
-			<form action="produk.php" class="flex items-center gap-3">
+			<form action="kelola-barang.php" class="flex items-center gap-3">
 				<input 
 				type="text" 
 				name="search" 
@@ -108,8 +134,15 @@
 		<div class="flex flex-wrap gap-3 justify-center">
 		<?php 
 			$where = "";
-			if(isset($_GET['search']) && $_GET['search'] != '' || isset($_GET['kat']) && $_GET['kat'] != ''){
-				$where = "AND p.product_name LIKE '%".$_GET['search']."%' AND p.category_id LIKE '%".$_GET['kat']."%' ";
+
+			if(isset($_GET['search']) && $_GET['search'] != ''){
+				$search = mysqli_real_escape_string($conn, $_GET['search']);
+				$where .= " AND p.product_name LIKE '%$search%'";
+			}
+
+			if(isset($_GET['kat']) && $_GET['kat'] != ''){
+				$kat = (int)$_GET['kat'];
+				$where .= " AND p.category_id = '$kat'";
 			}
 
 			// Pagination setup
@@ -135,7 +168,7 @@
 				while($p = mysqli_fetch_array($produk)){
 		?>
 				<a href="detail-produk.php?id=<?php echo $p['product_id'] ?>">
-					<div class="relative w-60 h-auto flex-col border border-gray-300 rounded-xl bg-white hover:shadow-lg transition">
+					<div class="relative w-75 h-auto flex-col border border-gray-300 rounded-xl bg-white hover:shadow-lg transition">
 						<!-- Badge Kategori -->
 						<div class="absolute top-3 left-3 <?php echo (strtolower($p['category_name']) == 'diambil') ? 'bg-red-800/80' : 'bg-green-800/80' ?> text-white text-xs px-2 py-1 rounded-lg font-semibold">
 							<?php echo $p['category_name'] ?>
@@ -155,8 +188,8 @@
 							</p>
 						</div>
 						<div class="gap-2 flex justify-end">
-							<a href="edit-produk.php?id=<?php echo $p['product_id'] ?>"><i data-lucide="pencil" class="w-4 h-4"></i></a>
-							<a class="text-red-500" href="proses-hapus.php?idp=<?php echo $p['product_id'] ?>" onclick="return confirm('Yakin ingin hapus ?')"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
+							<a href="edit-barang.php?id=<?php echo $p['product_id'] ?>"><i data-lucide="pencil" class="w-5 h-5 hover:text-blue-500"></i></a>
+							<a class="text-red-500" href="proses-hapus.php?idp=<?php echo $p['product_id'] ?>" onclick="return confirm('Yakin ingin hapus ?')"><i data-lucide="trash-2" class="w-5 h-5 hover:text-red-700"></i></a>
 						</div>
 						</div>
 					</div>

@@ -44,7 +44,7 @@
 					$_SESSION['status_login'] = true;
 					$_SESSION['a_global'] = $d;
 					$_SESSION['id'] = $d->admin_id;
-					echo '<script>window.location="dashboard.php"</script>';
+					echo '<script>window.location="dashboard-admin.php"</script>';
 				}else{
 					echo '<script>alert("Username atau password Anda salah!")</script>';
 				}
