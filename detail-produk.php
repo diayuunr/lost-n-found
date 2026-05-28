@@ -24,7 +24,7 @@
 			<h1 class="text-2xl font-bold">
 				<a href="index.php">LOST <span class="text-[#53B789]">&</span> FOUND</a>
 			</h1>
-			<div class="flex items-center gap-3 bg-black hover:bg-gray-800 text-white text-md px-5 py-2 rounded-3xl">
+			<div class="flex items-center gap-3 bg-black hover:bg-gray-800 text-white text-md px-5 py-2 rounded-3xl cursor-pointer">
 				<a href="login.php">Login</a>
 			</div>
 		</div>
