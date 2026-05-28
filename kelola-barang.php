@@ -167,7 +167,7 @@
 			if(mysqli_num_rows($produk) > 0){
 				while($p = mysqli_fetch_array($produk)){
 		?>
-				<a href="detail-produk.php?id=<?php echo $p['product_id'] ?>">
+				<a href="detail-produk-admin.php?id=<?php echo $p['product_id'] ?>">
 					<div class="relative w-75 h-auto flex-col border border-gray-300 rounded-xl bg-white hover:shadow-lg transition">
 						<!-- Badge Kategori -->
 						<div class="absolute top-3 left-3 <?php echo (strtolower($p['category_name']) == 'diambil') ? 'bg-red-800/80' : 'bg-green-800/80' ?> text-white text-xs px-2 py-1 rounded-lg font-semibold">
